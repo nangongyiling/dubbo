@@ -34,9 +34,9 @@ public class ProtocolBeanDefinitionParse implements BeanDefinitionParser{
 		if(StringUtils.isBlank(port)){
 			throw new RuntimeException("parse ProtocolBeanDefinitionParse port is null");
 		}
-		if(StringUtils.isBlank(contextpath)){
-			throw new RuntimeException("parse ProtocolBeanDefinitionParse contextpath is null");
-		}
+//		if(StringUtils.isBlank(contextpath)){
+//			throw new RuntimeException("parse ProtocolBeanDefinitionParse contextpath is null");
+//		}
 		bean.getPropertyValues().addPropertyValue("name", name);
 		bean.getPropertyValues().addPropertyValue("host", host);
 		bean.getPropertyValues().addPropertyValue("port", port);

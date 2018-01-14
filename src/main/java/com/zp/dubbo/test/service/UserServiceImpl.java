@@ -1,4 +1,4 @@
-package com.zp.dubbo.service;
+package com.zp.dubbo.test.service;
 
 public class UserServiceImpl implements UserService{
 
