@@ -1,4 +1,4 @@
-package com.zp.dubbo.configBean;
+package com.zp.dubbo.invoke;
 
 import com.zp.dubbo.invoke.Invocation;
 import com.zp.dubbo.invoke.Invoke;
