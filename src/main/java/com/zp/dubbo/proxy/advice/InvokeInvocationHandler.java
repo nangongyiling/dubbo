@@ -23,7 +23,9 @@ public class InvokeInvocationHandler implements InvocationHandler{
 		this.reference = reference;
 	}
 	public Object invoke(Object arg0, Method arg1, Object[] arg2) throws Throwable {
-		return reference.getIntf();
+		System.out.println("已经调用了代理");
+		//在这个invoke里面最终要调用多个远程的provider
+		return null;
 	}
 
 }

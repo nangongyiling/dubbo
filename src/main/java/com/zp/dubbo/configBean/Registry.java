@@ -1,13 +1,26 @@
 package com.zp.dubbo.configBean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.zp.dubbo.registry.BaseRegistry;
+import com.zp.dubbo.registry.RedisRegistry;
+
 public class Registry extends BaseConfigBean implements InitializingBean,ApplicationContextAware{
 	
 	public ApplicationContext application;
+	
+	private static Map<String,BaseRegistry> registryMap = new HashMap<String,BaseRegistry>();
+	
+	//注册中心的代理
+	static{
+		registryMap.put("redis", new RedisRegistry());
+	}
 	
 	/**
 	 * 
@@ -45,4 +58,9 @@ public class Registry extends BaseConfigBean implements InitializingBean,Applica
 			throws BeansException {
 		this.application = applicationContext;
 	}
+
+	public static Map<String, BaseRegistry> getRegistryMap() {
+		return registryMap;
+	}
+	
 }

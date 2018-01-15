@@ -58,7 +58,7 @@ public class ReferenceBeanDefinitionParse implements BeanDefinitionParser{
 		bean.getPropertyValues().addPropertyValue("loadbalance", loadbalance);
 		bean.getPropertyValues().addPropertyValue("cluster", cluster);
 		bean.getPropertyValues().addPropertyValue("retries", retries);
-		parse.getRegistry().registerBeanDefinition("reference", bean);
+		parse.getRegistry().registerBeanDefinition("reference"+id, bean);
 		return bean;
 	}
 

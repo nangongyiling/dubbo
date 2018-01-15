@@ -41,6 +41,7 @@ public class ProtocolBeanDefinitionParse implements BeanDefinitionParser{
 		bean.getPropertyValues().addPropertyValue("host", host);
 		bean.getPropertyValues().addPropertyValue("port", port);
 		bean.getPropertyValues().addPropertyValue("contextpath", contextpath);
+		parse.getRegistry().registerBeanDefinition("protocol"+host+port, bean);
 		return bean;
 	}
 

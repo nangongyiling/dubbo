@@ -1,8 +1,18 @@
 package com.zp.dubbo.configBean;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
-public class Service extends BaseConfigBean implements InitializingBean{
+import com.zp.dubbo.registry.BaseRegistryDelegate;
+
+/**
+ * 一个service代表一个dubbo的配置
+ * @author guitai
+ *
+ */
+public class Service extends BaseConfigBean implements InitializingBean,ApplicationContextAware{
 
 	/**
 	 * 
@@ -11,11 +21,14 @@ public class Service extends BaseConfigBean implements InitializingBean{
 	
 	private String ref;
 	
-	private String portocol;
+	private String protocol;
 	
-	private String inf;
+	private String intf;
+	
+	private static ApplicationContext application;
 
 	public void afterPropertiesSet() throws Exception {
+		BaseRegistryDelegate.registry(ref, application);
 	}
 
 	public String getRef() {
@@ -26,20 +39,28 @@ public class Service extends BaseConfigBean implements InitializingBean{
 		this.ref = ref;
 	}
 
-	public String getPortocol() {
-		return portocol;
+
+	public String getProtocol() {
+		return protocol;
 	}
 
-	public void setPortocol(String portocol) {
-		this.portocol = portocol;
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
 
-	public String getInf() {
-		return inf;
+	public String getIntf() {
+		return intf;
 	}
 
-	public void setInf(String inf) {
-		this.inf = inf;
+	public void setIntf(String intf) {
+		this.intf = intf;
 	}
 
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		Service.application = applicationContext;
+	}
+
+	public static ApplicationContext getApplicationContext(){
+		return application;
+	}
 }

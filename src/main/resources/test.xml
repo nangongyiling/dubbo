@@ -13,4 +13,5 @@
 		<zp:reference id="userService" interface="com.zp.dubbo.test.service.UserService" 
 			loadbalance="random" cluster="redis" retries="3" protocol="http"/>
 		<zp:protocol name="http" port="27017" host="127.0.0.1"/>
+		<zp:service interface="com.zp.dubbo.test.service.UserService" ref="" protocol="http" />
 </beans>

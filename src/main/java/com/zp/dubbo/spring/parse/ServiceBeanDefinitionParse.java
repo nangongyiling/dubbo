@@ -43,6 +43,7 @@ public class ServiceBeanDefinitionParse implements BeanDefinitionParser{
 		bean.getPropertyValues().addPropertyValue("protocol", protocol);
 		bean.getPropertyValues().addPropertyValue("intf", intf);
 		bean.getPropertyValues().addPropertyValue("ref", ref);
+		parse.getRegistry().registerBeanDefinition("service"+intf, bean);
 		return bean;
 	}
 	
