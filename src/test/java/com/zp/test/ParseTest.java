@@ -12,5 +12,6 @@ public class ParseTest {
 			System.out.println(s);
 		}
 		System.out.println(app.getBean("Registry127.0.0.1"));
+		
 	}
 }
