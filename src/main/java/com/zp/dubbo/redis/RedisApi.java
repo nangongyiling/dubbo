@@ -2,6 +2,7 @@ package com.zp.dubbo.redis;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 import com.alibaba.fastjson.JSONObject;
@@ -35,7 +36,8 @@ public class RedisApi {
 	}
 	
 	public static void createJedisPool(String address){
-		pool = new JedisPool(config,address.split(":")[0],Integer.valueOf(address.split(":")[1]),100000);
+		pool = new JedisPool(config,address.split(":")[0],
+				Integer.valueOf(address.split(":")[1]),100000);
 	}
 
 	public static boolean exists(String key){
@@ -58,6 +60,58 @@ public class RedisApi {
 	public static void returnResource(JedisPool pool,Jedis jedis){
 		if(jedis!=null){
 			pool.returnResource(jedis);
+		}
+	}
+	
+	/**
+	 * 查询集合，0代表集合开始坐标，-1代表集合的倒数坐标
+	 * @param key
+	 * @return
+	 */
+	public static List<String> lrange(String key){
+		Jedis jedis = null;
+		List<String> value = null;
+		try {
+			jedis = pool.getResource();
+			value = jedis.lrange(key,0,-1);
+		} catch (Exception e) {
+			
+		}finally{
+			if(jedis!=null){
+				returnResource(pool,jedis);
+			}
+			
+		}
+		return value;
+	}
+	
+	public static void del(String key){
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			jedis.del(key);
+		} catch (Exception e) {
+			
+		}finally{
+			if(jedis!=null){
+				returnResource(pool,jedis);
+			}
+			
+		}
+	}
+	
+	public static void lpush(String key,String...value){
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			jedis.lpush(key, value);
+		} catch (Exception e) {
+			
+		}finally{
+			if(jedis!=null){
+				returnResource(pool,jedis);
+			}
+			
 		}
 	}
 }

@@ -1,7 +1,9 @@
 package com.zp.dubbo.configBean;
 
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +16,7 @@ import org.springframework.context.ApplicationContextAware;
 import com.zp.dubbo.invoke.HttpInvoke;
 import com.zp.dubbo.invoke.Invoke;
 import com.zp.dubbo.proxy.advice.InvokeInvocationHandler;
+import com.zp.dubbo.registry.BaseRegistryDelegate;
 
 public class Reference extends BaseConfigBean implements InitializingBean,FactoryBean,ApplicationContextAware {
 	
@@ -41,6 +44,17 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	private static Map<String,Invoke> invokeMap = new HashMap<String,Invoke>();
 	
 	private Invoke invoke;
+	
+	private List<String> list = new ArrayList<String>();
+
+	
+	public List<String> getList() {
+		return list;
+	}
+
+	public void setList(List<String> list) {
+		this.list = list;
+	}
 
 	//调用协议
 	static {
@@ -98,6 +112,8 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	}
 
 	public void afterPropertiesSet() throws Exception {
+		list = BaseRegistryDelegate.getRegistry(id,applicationContext);
+		System.out.println("获取信息结果："+list);
 	}
 
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
