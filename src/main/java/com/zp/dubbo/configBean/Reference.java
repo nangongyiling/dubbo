@@ -15,6 +15,9 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.zp.dubbo.invoke.HttpInvoke;
 import com.zp.dubbo.invoke.Invoke;
+import com.zp.dubbo.loadBalance.LoadBalance;
+import com.zp.dubbo.loadBalance.RandomLoadBalance;
+import com.zp.dubbo.loadBalance.RoundRobinLoadBalance;
 import com.zp.dubbo.proxy.advice.InvokeInvocationHandler;
 import com.zp.dubbo.registry.BaseRegistryDelegate;
 
@@ -43,6 +46,8 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	
 	private static Map<String,Invoke> invokeMap = new HashMap<String,Invoke>();
 	
+	private static Map<String,LoadBalance> loadBalanceMap = new HashMap<String,LoadBalance>();
+	
 	private Invoke invoke;
 	
 	private List<String> list = new ArrayList<String>();
@@ -61,6 +66,9 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 		invokeMap.put("http", new HttpInvoke());
 		invokeMap.put("netty", null);
 		invokeMap.put("rmi", null);
+		
+		loadBalanceMap.put("random", new RandomLoadBalance());
+		loadBalanceMap.put("round", new RoundRobinLoadBalance());
 	}
 
 	public String getId() {
@@ -158,4 +166,9 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	public void setInvoke(Invoke invoke) {
 		this.invoke = invoke;
 	}
+
+	public static Map<String, LoadBalance> getLoadBalanceMap() {
+		return loadBalanceMap;
+	}
+	
 }
