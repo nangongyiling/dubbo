@@ -7,6 +7,7 @@ import com.zp.dubbo.invoke.Invocation;
 import com.zp.dubbo.invoke.Invoke;
 import com.zp.dubbo.loadBalance.LoadBalance;
 import com.zp.dubbo.loadBalance.NodeInfo;
+import com.zp.dubbo.rpc.http.HttpRequest;
 
 public class HttpInvoke implements Invoke {
 
@@ -26,7 +27,8 @@ public class HttpInvoke implements Invoke {
 		sendParam.put("paramTypes", invocation.getMethod().getParameterTypes());
 		String url = "http://"+nodeInfo.getHost()+":"+nodeInfo.getPort()+nodeInfo.getContextPath();
 		//http调用生产者服务
-		return null;
+		String result = HttpRequest.sendPost(url, sendParam.toJSONString());
+		return result;
 	}
 
 }

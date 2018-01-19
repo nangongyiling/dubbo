@@ -31,7 +31,7 @@ public class InvokeInvocationHandler implements InvocationHandler{
 		invocation.setObjs(arg2);
 		invocation.setReference(reference);
 		String result = invoke.invoke(invocation);
-		return null;
+		return result;
 	}
 
 }
