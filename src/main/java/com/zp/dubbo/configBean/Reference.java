@@ -13,8 +13,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.zp.dubbo.cluster.Cluster;
+import com.zp.dubbo.cluster.FailfastCluster;
+import com.zp.dubbo.cluster.FailoverCluster;
+import com.zp.dubbo.cluster.FailsafeCluster;
 import com.zp.dubbo.invoke.HttpInvoke;
 import com.zp.dubbo.invoke.Invoke;
+import com.zp.dubbo.invoke.NettyInvoke;
 import com.zp.dubbo.invoke.RmiInvoke;
 import com.zp.dubbo.loadBalance.LoadBalance;
 import com.zp.dubbo.loadBalance.RandomLoadBalance;
@@ -49,6 +54,8 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	
 	private static Map<String,LoadBalance> loadBalanceMap = new HashMap<String,LoadBalance>();
 	
+	private static Map<String, Cluster> clusterMap = new HashMap<String,Cluster>();
+	
 	private Invoke invoke;
 	
 	private List<String> list = new ArrayList<String>();
@@ -65,11 +72,15 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	//调用协议
 	static {
 		invokeMap.put("http", new HttpInvoke());
-		invokeMap.put("netty", null);
+		invokeMap.put("netty", new NettyInvoke());
 		invokeMap.put("rmi", new RmiInvoke());
 		
 		loadBalanceMap.put("random", new RandomLoadBalance());
 		loadBalanceMap.put("round", new RoundRobinLoadBalance());
+		
+		clusterMap.put("failover", new FailoverCluster());
+		clusterMap.put("failfast", new FailfastCluster());
+		clusterMap.put("failsafe", new FailsafeCluster());
 	}
 
 	public String getId() {
@@ -170,6 +181,10 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 
 	public static Map<String, LoadBalance> getLoadBalanceMap() {
 		return loadBalanceMap;
+	}
+
+	public static Map<String, Cluster> getClusterMap() {
+		return clusterMap;
 	}
 	
 }

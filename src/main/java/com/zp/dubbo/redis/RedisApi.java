@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisPubSub;
 
 public class RedisApi {
 	private static JedisPool pool;
@@ -112,6 +113,42 @@ public class RedisApi {
 				returnResource(pool,jedis);
 			}
 			
+		}
+	}
+	
+	/**
+	 * 发布消息
+	 */
+	public static void publish(String channel,String msg){
+		Jedis jedis =null;
+		try {
+			jedis = pool.getResource();
+			jedis.publish(channel, msg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(jedis!=null){
+				returnResource(pool,jedis);
+			}
+		}
+	}
+	
+	/**
+	 * 订阅消息
+	 * @param channel
+	 * @param jedisPubSub
+	 */
+	public static void subscribe(String channel,JedisPubSub jedisPubSub){
+		Jedis jedis =null;
+		try {
+			jedis = pool.getResource();
+			jedis.subscribe(jedisPubSub, channel);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(jedis!=null){
+				returnResource(pool,jedis);
+			}
 		}
 	}
 }

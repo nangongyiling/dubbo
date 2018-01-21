@@ -5,6 +5,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.zp.dubbo.redis.RedisApi;
 import com.zp.dubbo.registry.BaseRegistryDelegate;
 
 /**
@@ -29,6 +30,8 @@ public class Service extends BaseConfigBean implements InitializingBean,Applicat
 
 	public void afterPropertiesSet() throws Exception {
 		BaseRegistryDelegate.registry(ref, application);
+		//这个地方的内容必须和注册时的内容一致
+		RedisApi.publish("channel"+ref, "");
 	}
 
 	public String getRef() {
