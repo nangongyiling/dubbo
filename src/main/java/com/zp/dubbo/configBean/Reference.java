@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.zp.dubbo.invoke.HttpInvoke;
 import com.zp.dubbo.invoke.Invoke;
+import com.zp.dubbo.invoke.RmiInvoke;
 import com.zp.dubbo.loadBalance.LoadBalance;
 import com.zp.dubbo.loadBalance.RandomLoadBalance;
 import com.zp.dubbo.loadBalance.RoundRobinLoadBalance;
@@ -65,7 +66,7 @@ public class Reference extends BaseConfigBean implements InitializingBean,Factor
 	static {
 		invokeMap.put("http", new HttpInvoke());
 		invokeMap.put("netty", null);
-		invokeMap.put("rmi", null);
+		invokeMap.put("rmi", new RmiInvoke());
 		
 		loadBalanceMap.put("random", new RandomLoadBalance());
 		loadBalanceMap.put("round", new RoundRobinLoadBalance());

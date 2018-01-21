@@ -2,6 +2,8 @@ package com.zp.dubbo.configBean;
 
 import org.springframework.beans.factory.InitializingBean;
 
+import com.zp.dubbo.rmi.RmiUtil;
+
 public class Protocol extends BaseConfigBean implements InitializingBean{
 	
 	private static final long serialVersionUID = 36528216447617294L;
@@ -47,6 +49,9 @@ public class Protocol extends BaseConfigBean implements InitializingBean{
 	}
 
 	public void afterPropertiesSet() throws Exception {
-		
+		if("rmi".equalsIgnoreCase(name)){
+			RmiUtil util = new RmiUtil();
+			util.startRmiServer(host, port, "zpsoarmi");
+		}
 	}
 }
